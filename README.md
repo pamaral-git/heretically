@@ -1,21 +1,29 @@
-# [Heretically](https://heretically.streamlit.app) ◦ Uncensored AI Explorer 🔥
+# 🔥 Heretically
 
-Heretic model discovery and comparative ranking based on HuggingFace.
+Explore and Discover Uncensored [Heretic](https://huggingface.co/models?other=heretic) tagged Models from Hugging Face.
 
-Fork from [Heretic Models Explorer](https://huggingface.co/spaces/MuXodious/Heretic-Models-Explorer). Inspired greatly by [@p-e-w](https://github.com/p-e-w) [Heretic](https://github.com/p-e-w/heretic) and [Heretic Grimoire](https://huggingface.co/spaces/heretic-org/Heretic-Grimoire).
+Fork of [Heretic Models Explorer](https://huggingface.co/spaces/MuXodious/Heretic-Models-Explorer), inspired by [@p-e-w](https://github.com/p-e-w)'s [Heretic](https://github.com/p-e-w/heretic) and [Heretic Grimoire](https://huggingface.co/spaces/heretic-org/Heretic-Grimoire).
 
 **Quick Start:**
-- ☁️ Web Preview (Cloud): https://heretically.streamlit.app
-- 🐳 Docker Self-host (Local): `git clone` → `docker compose up --pull always --build -d` → `http://localhost:8501`
+- ☁️ **Streamlit Cloud**: https://heretically.streamlit.app (`app.py`)
+- 🤗 **Hugging Face Public Space**: [`hf_space/`](hf_space/) standalone Gradio app (`python hf_space/publish_space.py`)
+- 🐳 **Docker Self-host (Local)**: `git clone` → `docker compose up --pull always --build -d` → `http://localhost:8501`
 
 🛠️ **Comparative Improvements:**
 
 | Domain | Change | Impact |
-| :--- | :--- | :--- | 
-| **Performance** | Load Optimisation | More Parameters and filtering by Release date , Unknown dates and `?unknowns=` + Skips parsing ~2,000 files on boot. |
-| **Caching** | Dedicated Popularity Store | Decoupled likes and downloads into `src/popularity_store.py` and `data/popularity.json` + Metadata syncs + Sidebar updating. |
-| **Analytics** | Metric Dashboards | Replaced simple KL/Refusal badges with KL bands (0.01, 0.05, 0.15) and sample floors ($n < 50$) + Flagging 0% refusal rates that have high-divergence/low-sample. |
+| :--- | :--- | :--- |
+| **New UI** | Warm-Paper Design System | Light warm-paper palette (`#F7F4EE` paper, `#FDFBF7` cards, `#EFE9DF` raised, `#C2410C` ember) with `.streamlit/config.toml` + `Newsreader`, `Instrument Sans`, and `JetBrains Mono` typography. |
+| **Fast Boot** | `25 (Top past month)` Pre-loader | `src/heretically_preloader.py` parses only the top 25 models from the last 30 days by downloads/likes on cold start (with `Created` → `LastModified` fallback and backfill), while `10 (Trending 7d)`, `50`, `100`, and `All` remain selectable. |
+| **Toolbar & KPIs** | Compact 2-Tier Bar + KPI Strip | Inline Search, Sort, Load Scope, Release Date, Unknowns handling, Heretic generation pills, GGUF/quant toggle, and a 4-card KPI strip (`Models Shown`, `Heretic 2.x Share`, `Median KL`, `Lowest Refusal`). |
+| **Caching** | Dedicated Popularity Store | Decoupled likes and downloads into `src/popularity_store.py` and `data/popularity.json` (persisted across rebuilds via `./data:/app/data`), avoiding expensive README/JSON re-parses when popularity changes. |
+| **Analytics** | Adaptive Metrics & Flags | Adaptive KL bands (corpus tertiles with static fallback), median-based sample floors, 0%-refusal anomaly flags, plus derived `Refusal Drop` and `Sample Size` columns. |
+| **Metadata** | Heretic v2 Detection | Reads plugin-based `reproduce.json` schema v4 (`environment.heretic.version`, `scores`) for Heretic 2.x, keeps legacy v1.x `metrics` support, falls back to model-card "made using Heretic vX" parsing, and exposes **Heretic Version / Gen / Version Source** columns. |
+| **Ranking** | Priority Leaderboard | Candidate filters, 7 percentile-ranked criterion sliders (`0–100` Priority Score), Top Ranked Spotlight & Active Weights cards, CSV export, `Directional Ablation Trade-off Matrix` reference, and `Corpus Distribution Charts`. |
+| **HF Space** | Standalone Gradio Package | Self-contained [`hf_space/`](hf_space/) Gradio leaderboard for the free `cpu-basic` tier with zero persistent storage and one-command public Space publishing. |
 
-⚠️ **Current Limitations:** Date Logic (relies strictly on `created_at` and no fallback to `last_modified`) and Heuristics (static KL bands and sample floors without dynamic tuning).
+---
+
+ℹ️ **Date Logic:** `Created` prefers Hugging Face's `created_at` and falls back to `last_modified` when a model has no creation date, so fewer models land in the unknown-date bucket.
 
 🤗 **Reference:** [HuggingFace PR](https://huggingface.co/spaces/MuXodious/Heretic-Models-Explorer/commit/c5a3505f2df7445adcf61799902d1506906cd645)

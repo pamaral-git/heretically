@@ -1,0 +1,13 @@
+.git
+._*
+._.*
+**/._*
+**/._.*
+.DS_Store
+**/.DS_Store
+*.html
+*.md
+hf_space
+.devcontainer
+run_cline.sh
+\*ready
