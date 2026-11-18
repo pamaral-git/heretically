@@ -6,4 +6,7 @@ services:
       - "8501:8501"
     environment:
       - STREAMLIT_SERVER_HEADLESS=true
+    volumes:
+      # Persist data/ (popularity file, snapshot cache) across rebuilds
+      - ./data:/app/data
     restart: unless-stopped

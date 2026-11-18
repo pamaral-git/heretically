@@ -1,0 +1,10 @@
+# Heretically — warm-paper light theme (aligned with meta-page.html)
+# Paper #F7F4EE · Card #FDFBF7 · Raised #EFE9DF · Ink #1F1B16 · Ember #C2410C
+
+[theme]
+base = "light"
+primaryColor = "#C2410C"
+backgroundColor = "#F7F4EE"
+secondaryBackgroundColor = "#EFE9DF"
+textColor = "#1F1B16"
+font = "sans serif"
